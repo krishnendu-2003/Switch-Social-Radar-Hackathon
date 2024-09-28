@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { Text } from "react-native-paper";
+import { StyleSheet, View, Text } from "react-native"; // No need to import from react-native-paper
 
 import { Section } from "../Section";
 import { useAuthorization } from "../utils/useAuthorization";
@@ -12,10 +11,7 @@ export function HomeScreen() {
 
   return (
     <View style={styles.screenContainer}>
-      <Text
-        style={{ fontWeight: "bold", marginBottom: 12 }}
-        variant="displaySmall"
-      >
+      <Text style={{ fontWeight: "bold", marginBottom: 12 }}>
         Solana Mobile Expo Template
       </Text>
       {selectedAccount ? (

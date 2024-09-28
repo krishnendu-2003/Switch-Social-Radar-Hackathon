@@ -1,5 +1,4 @@
-import { ViewStyle, View, StyleSheet } from "react-native";
-import { Modal, Text, Button, Portal, useTheme } from "react-native-paper";
+import { ViewStyle, View, StyleSheet, Modal, Text, TouchableOpacity } from "react-native";
 
 interface AppModalProps {
   children: React.ReactNode;
@@ -21,49 +20,51 @@ export function AppModal({
   submitDisabled,
   submitLabel = "Save", // Defaulting submitLabel to "Save" here
 }: AppModalProps) {
-  const theme = useTheme();
   return (
-    <Portal>
-      <Modal
-        visible={show}
-        onDismiss={hide}
-        contentContainerStyle={[
-          styles.container,
-          { backgroundColor: theme.colors.elevation.level4 },
-        ]}
-      >
-        <View>
+    <Modal
+      transparent={true}
+      visible={show}
+      animationType="slide"
+      onRequestClose={hide}
+    >
+      <View style={styles.overlay}>
+        <View style={styles.container}>
           <Text style={styles.title}>{title}</Text>
           {children}
           <View style={styles.action}>
             <View style={styles.buttonGroup}>
               {submit && (
-                <Button
-                  mode="contained"
+                <TouchableOpacity
+                  style={[styles.button, submitDisabled && styles.buttonDisabled]}
                   onPress={submit}
                   disabled={submitDisabled}
-                  style={styles.button}
                 >
-                  {submitLabel}
-                </Button>
+                  <Text style={styles.buttonText}>{submitLabel}</Text>
+                </TouchableOpacity>
               )}
-              <Button onPress={hide} style={styles.button}>
-                Close
-              </Button>
+              <TouchableOpacity style={styles.button} onPress={hide}>
+                <Text style={styles.buttonText}>Close</Text>
+              </TouchableOpacity>
             </View>
           </View>
         </View>
-      </Modal>
-    </Portal>
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // semi-transparent background
+  },
   container: {
+    width: '80%',
     padding: 20,
-    marginLeft: 20,
-    marginRight: 20,
     borderRadius: 5,
+    backgroundColor: 'white', // white background for modal
   },
   title: {
     fontSize: 20,
@@ -78,6 +79,16 @@ const styles = StyleSheet.create({
     justifyContent: "space-around", // Adjust based on your design requirements
   },
   button: {
+    padding: 10,
+    backgroundColor: '#007BFF', // Primary button color
+    borderRadius: 5,
     margin: 4, // Adjust as needed
+  },
+  buttonDisabled: {
+    backgroundColor: 'gray', // Disabled button color
+  },
+  buttonText: {
+    color: 'white', // Text color
+    textAlign: 'center',
   },
 });

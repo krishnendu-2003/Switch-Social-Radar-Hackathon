@@ -3,7 +3,6 @@ import "react-native-get-random-values";
 import { Buffer } from "buffer";
 global.Buffer = Buffer;
 
-
 import "./src/polyfills";
 
 import { StyleSheet, useColorScheme } from "react-native";
@@ -15,12 +14,6 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from "@react-navigation/native";
-import {
-  PaperProvider,
-  MD3DarkTheme,
-  MD3LightTheme,
-  adaptNavigationTheme,
-} from "react-native-paper";
 import { AppNavigator } from "./src/navigators/AppNavigator";
 import { ClusterProvider } from "./src/components/cluster/cluster-data-access";
 
@@ -28,27 +21,22 @@ const queryClient = new QueryClient();
 
 export default function App() {
   const colorScheme = useColorScheme();
-  const { LightTheme, DarkTheme } = adaptNavigationTheme({
-    reactNavigationLight: NavigationDefaultTheme,
-    reactNavigationDark: NavigationDarkTheme,
-  });
 
+  // Use react-navigation themes without react-native-paper
   const CombinedDefaultTheme = {
-    ...MD3LightTheme,
-    ...LightTheme,
+    ...NavigationDefaultTheme,
     colors: {
-      ...MD3LightTheme.colors,
-      ...LightTheme.colors,
+      ...NavigationDefaultTheme.colors,
     },
   };
+  
   const CombinedDarkTheme = {
-    ...MD3DarkTheme,
-    ...DarkTheme,
+    ...NavigationDarkTheme,
     colors: {
-      ...MD3DarkTheme.colors,
-      ...DarkTheme.colors,
+      ...NavigationDarkTheme.colors,
     },
   };
+
   return (
     <QueryClientProvider client={queryClient}>
       <ClusterProvider>
@@ -59,20 +47,12 @@ export default function App() {
               {
                 backgroundColor:
                   colorScheme === "dark"
-                    ? MD3DarkTheme.colors.background
-                    : MD3LightTheme.colors.background,
+                    ? CombinedDarkTheme.colors.background
+                    : CombinedDefaultTheme.colors.background,
               },
             ]}
           >
-            <PaperProvider
-              theme={
-                colorScheme === "dark"
-                  ? CombinedDarkTheme
-                  : CombinedDefaultTheme
-              }
-            >
-              <AppNavigator />
-            </PaperProvider>
+            <AppNavigator />
           </SafeAreaView>
         </ConnectionProvider>
       </ClusterProvider>

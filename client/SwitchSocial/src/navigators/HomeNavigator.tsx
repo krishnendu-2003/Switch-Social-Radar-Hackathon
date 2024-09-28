@@ -3,7 +3,7 @@ import React from "react";
 import { TopBar } from "../components/top-bar/top-bar-feature";
 import { HomeScreen } from "../screens/HomeScreen";
 import MaterialCommunityIcon from "@expo/vector-icons/MaterialCommunityIcons";
-import { useTheme } from "react-native-paper";
+import { useTheme } from "@react-navigation/native"; // Use theme from react-navigation
 import BlankScreen from "../screens/BlankScreen";
 
 const Tab = createBottomTabNavigator();
@@ -15,7 +15,7 @@ const Tab = createBottomTabNavigator();
  * More info: https://reactnavigation.org/docs/bottom-tab-navigator/
  */
 export function HomeNavigator() {
-  const theme = useTheme();
+  const theme = useTheme(); // Using the theme from react-navigation
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -42,6 +42,8 @@ export function HomeNavigator() {
               );
           }
         },
+        tabBarActiveTintColor: theme.colors.primary, // Theme's primary color
+        tabBarInactiveTintColor: theme.colors.text,  // Inactive tint color from theme
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />

@@ -1,24 +1,23 @@
-import { StyleSheet } from "react-native";
-import { Appbar, useTheme } from "react-native-paper";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import { TopBarWalletButton, TopBarWalletMenu } from "./top-bar-ui";
 import { useNavigation } from "@react-navigation/core";
+import { MaterialCommunityIcons } from "@expo/vector-icons"; // For the cog icon
 
 export function TopBar() {
   const navigation = useNavigation();
-  const theme = useTheme();
 
   return (
-    <Appbar.Header mode="small" style={styles.topBar}>
+    <View style={styles.topBar}>
       <TopBarWalletMenu />
 
-      <Appbar.Action
-        icon="cog"
-        mode="contained-tonal"
+      <TouchableOpacity
         onPress={() => {
           navigation.navigate("Settings");
         }}
-      />
-    </Appbar.Header>
+      >
+        <MaterialCommunityIcons name="cog" size={24} color="black" />
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -26,5 +25,9 @@ const styles = StyleSheet.create({
   topBar: {
     justifyContent: "flex-end",
     alignItems: "center",
+    flexDirection: "row", // To align items horizontally
+    height: 56, // Similar height as Appbar.Header
+    paddingHorizontal: 16,
+    backgroundColor: "#fff", // You can use a theme-based background color if needed
   },
 });

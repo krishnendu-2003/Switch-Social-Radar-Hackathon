@@ -1,5 +1,5 @@
 import { ClusterNetwork, useCluster } from "./cluster-data-access";
-import { RadioButton, Text } from "react-native-paper";
+import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { ClusterPickerRadioButtonGroupRow } from "./cluster-ui";
 
 function clusternetworkToIndex(clusterName: string): number {
@@ -18,17 +18,68 @@ export default function ClusterPickerFeature() {
   const [devNetCluster, testNetCluster] = clusters;
 
   return (
-    <>
-      <Text variant="headlineMedium">Cluster:</Text>
-      <RadioButton.Group
-        onValueChange={(newClusternetwork) =>
-          setSelectedCluster(clusters[clusternetworkToIndex(newClusternetwork)])
-        }
-        value={selectedCluster.network}
-      >
-        <ClusterPickerRadioButtonGroupRow cluster={devNetCluster} />
-        <ClusterPickerRadioButtonGroupRow cluster={testNetCluster} />
-      </RadioButton.Group>
-    </>
+    <View style={styles.container}>
+      <Text style={styles.headerText}>Cluster:</Text>
+      <View>
+        <TouchableOpacity
+          style={styles.radioButtonContainer}
+          onPress={() => setSelectedCluster(devNetCluster)}
+        >
+          <View style={styles.radioButton}>
+            {selectedCluster.network === ClusterNetwork.Devnet && (
+              <View style={styles.radioButtonSelected} />
+            )}
+          </View>
+          <Text style={styles.radioButtonText}>Devnet</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.radioButtonContainer}
+          onPress={() => setSelectedCluster(testNetCluster)}
+        >
+          <View style={styles.radioButton}>
+            {selectedCluster.network === ClusterNetwork.Testnet && (
+              <View style={styles.radioButtonSelected} />
+            )}
+          </View>
+          <Text style={styles.radioButtonText}>Testnet</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 16,
+  },
+  headerText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 12,
+  },
+  radioButtonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 12,
+  },
+  radioButton: {
+    height: 24,
+    width: 24,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: "#6200ea",
+    alignItems: "center",
+    justifyContent: "center",
+    marginRight: 8,
+  },
+  radioButtonSelected: {
+    height: 12,
+    width: 12,
+    borderRadius: 6,
+    backgroundColor: "#6200ea",
+  },
+  radioButtonText: {
+    fontSize: 16,
+  },
+});

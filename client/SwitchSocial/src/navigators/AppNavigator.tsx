@@ -9,15 +9,10 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import { Appearance, useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import * as Screens from "../screens";
 import { HomeNavigator } from "./HomeNavigator";
 import { StatusBar } from "expo-status-bar";
-import {
-  MD3DarkTheme,
-  MD3LightTheme,
-  adaptNavigationTheme,
-} from "react-native-paper";
 
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
@@ -29,7 +24,6 @@ import {
  *   https://reactnavigation.org/docs/params/
  *   https://reactnavigation.org/docs/typescript#type-checking-the-navigator
  *   https://reactnavigation.org/docs/typescript/#organizing-types
- *
  */
 
 type RootStackParamList = {
@@ -66,25 +60,19 @@ export interface NavigationProps
 
 export const AppNavigator = (props: NavigationProps) => {
   const colorScheme = useColorScheme();
-  const { LightTheme, DarkTheme } = adaptNavigationTheme({
-    reactNavigationLight: NavigationDefaultTheme,
-    reactNavigationDark: NavigationDarkTheme,
-  });
 
+  // Using react-navigation's default and dark themes without react-native-paper
   const CombinedDefaultTheme = {
-    ...MD3LightTheme,
-    ...LightTheme,
+    ...NavigationDefaultTheme,
     colors: {
-      ...MD3LightTheme.colors,
-      ...LightTheme.colors,
+      ...NavigationDefaultTheme.colors,
     },
   };
+
   const CombinedDarkTheme = {
-    ...MD3DarkTheme,
-    ...DarkTheme,
+    ...NavigationDarkTheme,
     colors: {
-      ...MD3DarkTheme.colors,
-      ...DarkTheme.colors,
+      ...NavigationDarkTheme.colors,
     },
   };
 
