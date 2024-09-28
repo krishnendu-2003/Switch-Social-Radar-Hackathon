@@ -6,7 +6,7 @@ import {
   useRequestAirdrop,
   useTransferSol,
 } from "./account-data-access";
-import { View, StyleSheet, ScrollView, Text, Button, ActivityIndicator } from "react-native";
+import { View, StyleSheet, ScrollView, Text, Button, ActivityIndicator,  TextInput } from "react-native";
 import { useState, useMemo } from "react";
 import { ellipsify } from "../../utils/ellipsify";
 import { AppModal } from "../ui/app-modal";
@@ -237,6 +237,12 @@ export function AccountTokenBalance({ address }: { address: PublicKey }) {
 const styles = StyleSheet.create({
   accountBalance: {
     marginTop: 12,
+  },
+  balance: {
+    fontSize: 16,
+    fontWeight: "bold",
+    marginTop: 8, // Adjust margin as needed
+    color: "black", // You can change color if needed
   },
   accountButtonGroup: {
     paddingVertical: 4,
