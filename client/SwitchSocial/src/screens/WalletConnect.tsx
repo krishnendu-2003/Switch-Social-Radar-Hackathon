@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, Image,TouchableOpacity,  TextInput, ScrollView,  KeyboardAvoidingView  } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native'; 
-import '../screens/Profile';
-import { Profile } from '../screens/Profile';
+// import '../screens/Profile';
+// import { Profile } from '../screens/Profile';
 
 
 export function WalletConnect() {
@@ -17,7 +17,7 @@ export function WalletConnect() {
             </ImageBackground>
             <Text style={{color: 'white', fontSize:30, marginTop:30}}> Enter Your Password</Text>
             <TextInput style={styles.input} placeholder="Password" placeholderTextColor="white" secureTextEntry={true} />
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
+            <TouchableOpacity onPress={() => navigation.navigate('FeedScreen')}>
             <Text style={styles.label}>Unlock</Text>
             </TouchableOpacity>
             </ScrollView> 

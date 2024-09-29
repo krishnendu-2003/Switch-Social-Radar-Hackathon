@@ -1,7 +1,11 @@
-import { View, Image, StyleSheet, ImageBackground } from 'react-native';
+import { View, Image, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+
 
 export function NavigationBar() {
+    const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -11,21 +15,33 @@ export function NavigationBar() {
       >
         <View style={styles.iconContainer}>
           <View style={styles.leftIcons}>
-            <Image source={require('../assets/homebutton.png')} />
-            <Image source={require('../assets/search.png')} />
+          <TouchableOpacity onPress={() => navigation.navigate('FeedScreen')}>
+          <Image source={require('../assets/homebutton.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity>
+          <Image source={require('../assets/search.png')} />
+          </TouchableOpacity>
           </View>
           <View style={styles.rightIcons}>
+            <TouchableOpacity>
             <Image source={require('../assets/reel.png')} />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Image source={require('../assets/Human.png')} />
+            </TouchableOpacity>
+            
           </View>
         </View>
       </ImageBackground>
       <View style={styles.centeredContainer}>
+        <TouchableOpacity onPress={() => navigation.navigate('CreatePost')}>
         <Image
           source={require('../assets/searchIcon.png')}
           style={styles.imageStyle}
           resizeMode="contain"
         />
+        </TouchableOpacity>
+        
       </View>
     </View>
   );

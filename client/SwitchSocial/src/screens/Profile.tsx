@@ -11,12 +11,10 @@ export function Profile() {
         resizeMode="cover"
       >
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-          <Image source={require('../assets/bell.fill.png')} />
+          <Image source={require('../assets/bell.fill.png')}  style={{ alignSelf: 'flex-end', margin: 20}}/>
           <Text style={styles.profileTitle}>My Profile</Text>
           <Image source={require('../assets/ProfilePhoto.jpeg')} style={styles.profilePhoto} />
           <Text style={styles.username}>Echo_Whisper._</Text>
-
-        
 
         </ScrollView>
         <NavigationBar />
@@ -39,14 +37,18 @@ const styles = StyleSheet.create({
   },
   profileTitle: {
     color: 'white',
+    fontSize: 50,
+
   },
   profilePhoto: {
     width: 150, 
     height: 150, 
     borderRadius: 75, 
     borderWidth: 2,
+    margin: 20
   },
   username: {
     color: 'white',
+    fontSize: 20,
   },
 });
