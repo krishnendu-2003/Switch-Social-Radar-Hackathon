@@ -10,8 +10,12 @@ export function Profile() {
         source={require('../assets/MyProfile.png')}
         style={styles.background}
         resizeMode="cover">
-      <NavigationBar/>
+        <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
+            <Image source={require('../assets/bell.fill.png')} style={{}}/>
+            <Text style={{color: 'white'}}>My Profile</Text>
 
+        </ScrollView>
+        <NavigationBar/>
         </ImageBackground>
     </View>
   );
@@ -24,6 +28,11 @@ const styles = StyleSheet.create({
   background: {
     flex: 1, 
     // alignItems: 'center',
+  },
+  scrollContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    paddingBottom: 20, 
   },
  
 });
