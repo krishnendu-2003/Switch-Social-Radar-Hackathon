@@ -46,6 +46,7 @@ export function HomeNavigator() {
         tabBarInactiveTintColor: theme.colors.text,  // Inactive tint color from theme
       })}
     >
+
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Blank" component={BlankScreen} />
     </Tab.Navigator>

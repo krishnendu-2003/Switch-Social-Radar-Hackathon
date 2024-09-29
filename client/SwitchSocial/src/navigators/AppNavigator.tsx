@@ -29,6 +29,8 @@ import { StatusBar } from "expo-status-bar";
 type RootStackParamList = {
   Home: undefined;
   Settings: undefined;
+  MainPage: undefined;
+  SignUp: undefined;
   // 🔥 Your screens go here
 };
 
@@ -43,17 +45,20 @@ const Stack = createNativeStackNavigator();
 
 const AppStack = () => {
   return (
-    <Stack.Navigator initialRouteName={"Home"}>
+    <Stack.Navigator initialRouteName={"MainPage"}>
       <Stack.Screen
         name="HomeStack"
         component={HomeNavigator}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="MainPage" component={Screens.MainPage}  options={{ headerShown: false }} />
+      <Stack.Screen name="SignUp" component={Screens.SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
       {/** 🔥 Your screens go here */}
     </Stack.Navigator>
   );
 };
+
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
