@@ -13,6 +13,8 @@ export function Profile() {
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
             <Image source={require('../assets/bell.fill.png')} style={{}}/>
             <Text style={{color: 'white'}}>My Profile</Text>
+            <Image source={require('../assets/ProfilePhoto.jpeg')} style={{width: 200,height: 200,borderRadius: 100, 
+            borderWidth: 2,}}/>
 
         </ScrollView>
         <NavigationBar/>
