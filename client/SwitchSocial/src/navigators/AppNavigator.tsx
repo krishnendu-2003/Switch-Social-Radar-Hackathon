@@ -32,6 +32,7 @@ type RootStackParamList = {
   MainPage: undefined;
   SignUp: undefined;
   WalletConnect: undefined;
+  Profile: undefined;
   // 🔥 Your screens go here
 };
 
@@ -55,6 +56,8 @@ const AppStack = () => {
       <Stack.Screen name="MainPage" component={Screens.MainPage}  options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={Screens.SignUp} options={{ headerShown: false }} />
       <Stack.Screen name="WalletConnect" component={Screens.WalletConnect} options={{ headerShown: false }} />
+      <Stack.Screen name="Profile" component={Screens.Profile} options={{ headerShown: false }} />
+
 
       <Stack.Screen name="Settings" component={Screens.SettingsScreen} />
       {/** 🔥 Your screens go here */}

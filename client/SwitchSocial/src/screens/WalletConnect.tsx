@@ -1,7 +1,12 @@
 import { View, Text, StyleSheet, ImageBackground, Image,TouchableOpacity,  TextInput, ScrollView,  KeyboardAvoidingView  } from 'react-native';
-import React from 'react'
+import React from 'react';
+import { useNavigation } from '@react-navigation/native'; 
+import '../screens/Profile';
+import { Profile } from '../screens/Profile';
+
 
 export function WalletConnect() {
+    const navigation = useNavigation();
   return (
     <View  style={styles.container}>
         <ImageBackground  source={require('../assets/walletconnect.png')} style={styles.background}
@@ -12,9 +17,11 @@ export function WalletConnect() {
             </ImageBackground>
             <Text style={{color: 'white', fontSize:30, marginTop:30}}> Enter Your Password</Text>
             <TextInput style={styles.input} placeholder="Password" placeholderTextColor="white" secureTextEntry={true} />
+            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Text style={styles.label}>Unlock</Text>
-
+            </TouchableOpacity>
             </ScrollView> 
+    
         </ImageBackground>
     </View>
   );
