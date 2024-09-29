@@ -7,7 +7,7 @@ export function Profile() {
       <Image 
         source={require('../assets/ToolBar.png')} 
         style={styles.toolbarImage} 
-        resizeMode="contain" // Ensure image maintains its aspect ratio
+        resizeMode="contain"
       />
     </View>
   );
@@ -20,11 +20,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   },
   toolbarImage: {
-    width: '100%',              
-    height: 66,                 
-    position: 'absolute',       // Absolute positioning to stick to the bottom
-    bottom: 0,                  // Ensures it touches the very bottom edge of the screen
-    left: 0,                    // Align it to the left edge
-    right: 0,                   // Align it to the right edge
+    width: '100%',
+    height: 66,
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
   },
 });
