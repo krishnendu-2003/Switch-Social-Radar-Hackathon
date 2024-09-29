@@ -1,5 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { ConnectButton, SignInButton } from "./sign-in-ui";
+import MainComponent from "../welcome/MainComponent";
 
 export function SignInFeature() {
   return (

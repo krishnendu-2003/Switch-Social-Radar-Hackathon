@@ -6,6 +6,7 @@ export function SettingsScreen() {
     <>
       <View style={styles.screenContainer}>
         <ClusterPickerFeature />
+        
       </View>
     </>
   );
