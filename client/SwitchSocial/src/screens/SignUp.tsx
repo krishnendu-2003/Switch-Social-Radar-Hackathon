@@ -1,7 +1,11 @@
 import { View, Text, StyleSheet, ImageBackground, Image,TouchableOpacity,  TextInput, ScrollView,  KeyboardAvoidingView  } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+
+
 
 export function SignUp() {
+  const navigation = useNavigation();
   return (
     
     <View style={styles.container}>
@@ -56,10 +60,11 @@ export function SignUp() {
             <ImageBackground source={require('../assets/iconbg.png')} style={{width: 60, height:60,  alignItems: 'center', justifyContent: 'center'}} resizeMode="contain">
             <Image source={require('../assets/Google.png')} style={{width: 40, height:60,}}  resizeMode="contain"/>
             </ImageBackground>
+            <TouchableOpacity onPress={() => navigation.navigate('WalletConnect')}>
             <ImageBackground source={require('../assets/iconbg.png')} style={{width: 60, height:60,  alignItems: 'center', justifyContent: 'center'}} resizeMode="contain">
             <Image source={require('../assets/Phantom.png')} style={{width: 40, height:60,}}  resizeMode="contain"/>
-
             </ImageBackground>
+            </TouchableOpacity>
         </View>
              </ScrollView>
         

@@ -1,6 +1,6 @@
 import { View, Text, Image, TouchableOpacity, ImageBackground } from 'react-native';
 import React from 'react';
-import { useNavigation } from '@react-navigation/native'; // Import useNavigation
+import { useNavigation } from '@react-navigation/native';
 
 export function MainPage() {
   const navigation = useNavigation(); // Use the navigation hook
