@@ -15,6 +15,7 @@ export function Profile() {
             <Text style={{color: 'white'}}>My Profile</Text>
             <Image source={require('../assets/ProfilePhoto.jpeg')} style={{width: 200,height: 200,borderRadius: 100, 
             borderWidth: 2,}}/>
+            <Text style={{color: 'white'}}>Echo_Whisper._</Text>
 
         </ScrollView>
         <NavigationBar/>
