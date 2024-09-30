@@ -35,6 +35,7 @@ type RootStackParamList = {
   Profile: undefined;
   FeedScreen: undefined;
   CreatePost: undefined;
+  SocialApp: undefined;
   // 🔥 Your screens go here
 };
 
@@ -61,6 +62,8 @@ const AppStack = () => {
       <Stack.Screen name="Profile" component={Screens.Profile} options={{ headerShown: false }} />
       <Stack.Screen name="FeedScreen" component={Screens.FeedScreen} options={{ headerShown: false }} />
       <Stack.Screen name="CreatePost" component={Screens.CreatePost} options={{ headerShown: false }} />
+      {/* <Stack.Screen name="SocialApp" component={Screens.SocialApp} options={{ headerShown: false }} /> */}
+
 
 
 
