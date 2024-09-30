@@ -1,0 +1,103 @@
+Here’s a table summarizing the API endpoints from your backend, including the request and response structures along with example fetch functions:
+
+### API Endpoints Overview
+
+| Endpoint                                | Method  | Request Structure                                                                                                                                                  | Response Structure                                                                                                     |
+|-----------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| `/api/auth/register`                   | POST    | `{ "username": "string", "email": "string", "password": "string" }`                                                                                            | `{ "token": "string" }`                                                                                              |
+| `/api/auth/login`                      | POST    | `{ "email": "string", "password": "string" }`                                                                                                                 | `{ "token": "string" }`                                                                                              |
+| `/api/auth/user`                       | GET     | (Headers: `x-auth-token`)                                                                                                                                       | `{ "_id": "string", "username": "string", "email": "string", "profilePicture": "string", "bio": "string" }`         |
+| `/api/comments/:postId`                | POST    | `{ "content": "string" }`                                                                                                                                        | `{ "_id": "string", "user": "string", "post": "string", "content": "string", "likes": [], "replies": [] }`           |
+| `/api/comments/:commentId/reply`      | POST    | `{ "content": "string" }`                                                                                                                                        | `{ "_id": "string", "user": "string", "post": "string", "content": "string", "likes": [], "replies": [] }`           |
+| `/api/comments/:postId`                | GET     | (Headers: `x-auth-token`)                                                                                                                                       | `[ { "_id": "string", "user": "string", "post": "string", "content": "string", "likes": [], "replies": [] }, ...]`  |
+| `/api/comments/:id`                    | DELETE  | (Headers: `x-auth-token`)                                                                                                                                       | `{ "message": "Comment removed" }`                                                                                    |
+| `/api/likes/post/:postId`              | POST    | (Headers: `x-auth-token`)                                                                                                                                        | `{ "message": "Post liked" }`                                                                                       |
+| `/api/likes/comment/:commentId`        | POST    | (Headers: `x-auth-token`)                                                                                                                                        | `{ "message": "Comment liked" }`                                                                                     |
+| `/api/likes/post/:postId`              | DELETE  | (Headers: `x-auth-token`)                                                                                                                                       | `{ "message": "Post unliked" }`                                                                                      |
+| `/api/likes/comment/:commentId`        | DELETE  | (Headers: `x-auth-token`)                                                                                                                                       | `{ "message": "Comment unliked" }`                                                                                   |
+| `/api/posts`                           | POST    | `{ "content": "string" }` + (form-data with file if applicable)                                                                                                 | `{ "_id": "string", "user": "string", "content": "string", "media": "string" }`                                     |
+| `/api/posts/feed`                      | GET     | (Headers: `x-auth-token`)                                                                                                                                       | `[ { "_id": "string", "user": "string", "content": "string", "media": "string" }, ...]`                            |
+| `/api/posts/:id`                       | GET     | (Headers: `x-auth-token`)                                                                                                                                       | `{ "_id": "string", "user": "string", "content": "string", "media": "string" }`                                     |
+| `/api/posts/:id`                       | DELETE  | (Headers: `x-auth-token`)                                                                                                                                       | `{ "message": "Post removed" }`                                                                                      |
+| `/api/users/profile/:id`               | GET     | (Headers: `x-auth-token`)                                                                                                                                       | `{ "_id": "string", "username": "string", "email": "string", "profilePicture": "string", "bio": "string" }`         |
+| `/api/users/profile`                    | PUT     | `{ "bio": "string" }` + (form-data with profilePicture if applicable)                                                                                          | `{ "_id": "string", "username": "string", "email": "string", "profilePicture": "string", "bio": "string" }`         |
+| `/api/users/follow/:id`                | POST    | (Headers: `x-auth-token`)                                                                                                                                       | `{ "message": "User followed" }`                                                                                     |
+| `/api/users/unfollow/:id`              | POST    | (Headers: `x-auth-token`)                                                                                                                                       | `{ "message": "User unfollowed" }`                                                                                    |
+| `/api/users/search`                    | GET     | (Headers: `x-auth-token`, Query Params: `?query=string`)                                                                                                      | `[ { "_id": "string", "username": "string", "profilePicture": "string" }, ...]`                                    |
+
+### Fetch Function Examples
+
+Here are example fetch functions for a few of the endpoints:
+
+#### Register
+
+```javascript
+async function register(username, email, password) {
+    const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+    });
+    const data = await response.json();
+    return data;
+}
+```
+
+#### Login
+
+```javascript
+async function login(email, password) {
+    const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
+    });
+    const data = await response.json();
+    return data;
+}
+```
+
+#### Fetch User Profile
+
+```javascript
+async function fetchUserProfile() {
+    const token = localStorage.getItem('token'); // Assume token is stored in localStorage
+    const response = await fetch('/api/auth/user', {
+        method: 'GET',
+        headers: {
+            'x-auth-token': token,
+        },
+    });
+    const data = await response.json();
+    return data;
+}
+```
+
+#### Create Post
+
+```javascript
+async function createPost(content, mediaFile) {
+    const formData = new FormData();
+    formData.append('content', content);
+    if (mediaFile) {
+        formData.append('media', mediaFile);
+    }
+
+    const token = localStorage.getItem('token');
+    const response = await fetch('/api/posts', {
+        method: 'POST',
+        headers: {
+            'x-auth-token': token,
+        },
+        body: formData,
+    });
+    const data = await response.json();
+    return data;
+}
+```
+
+This should give you a good overview of your endpoints along with request and response structures, as well as examples of how to interact with them using fetch. Let me know if you need further assistance!
