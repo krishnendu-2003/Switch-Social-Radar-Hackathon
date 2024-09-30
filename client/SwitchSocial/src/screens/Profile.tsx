@@ -95,13 +95,15 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,             
     fontSize: 18, 
-    color: 'white'
-
+    color: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 86, 
   },
   connectTextDD: {
-     
+      
     padding: 10,
-    borderRadius: 8,             
+    borderRadius: 8,              
     fontSize: 15, 
     color: 'white'
   }

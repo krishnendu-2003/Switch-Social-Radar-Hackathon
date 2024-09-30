@@ -7,3 +7,4 @@ export * from "./WalletConnect";
 export * from "./Profile";
 export * from "./FeedScreen";
 export * from "./CreatePost";
+// export * from "./SocialApp";
