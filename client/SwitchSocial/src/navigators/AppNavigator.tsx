@@ -36,6 +36,7 @@ type RootStackParamList = {
   FeedScreen: undefined;
   CreatePost: undefined;
   SocialApp: undefined;
+  SignIn: undefined;
   // 🔥 Your screens go here
 };
 
@@ -58,9 +59,12 @@ const AppStack = () => {
       />
       <Stack.Screen name="MainPage" component={Screens.MainPage}  options={{ headerShown: false }} />
       <Stack.Screen name="SignUp" component={Screens.SignUp} options={{ headerShown: false }} />
+      <Stack.Screen name="SignIn" component={Screens.SignIn} options={{ headerShown: false }} />
+
       <Stack.Screen name="WalletConnect" component={Screens.WalletConnect} options={{ headerShown: false }} />
       <Stack.Screen name="Profile" component={Screens.Profile} options={{ headerShown: false }} />
       <Stack.Screen name="FeedScreen" component={Screens.FeedScreen} options={{ headerShown: false }} />
+
       <Stack.Screen name="CreatePost" component={Screens.CreatePost} options={{ headerShown: false }} />
       {/* <Stack.Screen name="SocialApp" component={Screens.SocialApp} options={{ headerShown: false }} /> */}
 
