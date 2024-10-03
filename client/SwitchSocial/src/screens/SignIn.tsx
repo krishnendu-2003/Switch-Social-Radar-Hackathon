@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
 
-export function SignIn(){
+export function SignIn() {
   const navigation = useNavigation();
   const [email, getEmail] = useState('');
   const [password, getPassword] = useState('');
@@ -41,11 +41,11 @@ export function SignIn(){
         style={styles.background}
         resizeMode="cover">
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-          <Text style={{color: 'white', fontSize: 30}}>SIGN IN HERE!</Text>
+          <Text style={{ color: 'white', fontSize: 30 }}>SIGN IN HERE!</Text>
           <Text style={styles.label}>Email Id</Text>
-          <TextInput style={styles.input} placeholder="Enter your email" placeholderTextColor="white" keyboardType="email-address" onChangeText={getEmail}/>
+          <TextInput style={styles.input} placeholder="Enter your email" placeholderTextColor="white" keyboardType="email-address" onChangeText={getEmail} />
           <Text style={styles.label}>Password</Text>
-          <TextInput style={styles.input} placeholder="Enter your password" placeholderTextColor="white" secureTextEntry={true} onChangeText={getPassword}/>
+          <TextInput style={styles.input} placeholder="Enter your password" placeholderTextColor="white" secureTextEntry={true} onChangeText={getPassword} />
           <TouchableOpacity onPress={handleRegister}>
             <ImageBackground source={require('../assets/Rectangle33.png')} style={styles.button} resizeMode="contain">
               <Text style={{ color: 'white', fontSize: 20, fontWeight: '600' }}>Sign In</Text>
