@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.krishnendu2003.SwitchSocial"
     },
     "android": {
       "adaptiveIcon": {
@@ -27,6 +28,16 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-camera"
+,
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends.",
+          "cameraPermission": "The app accesses your camera to let you take photos to share with your friends."
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "45d2dece-6347-4195-9443-094a904529cb"
