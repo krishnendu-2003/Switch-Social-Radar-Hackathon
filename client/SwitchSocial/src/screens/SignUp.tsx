@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, ScrollView, KeyboardAvoidingView, Alert } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native'; // Import navigation hook
 
 export function SignUp() {
   const navigation = useNavigation();
-  const [username, setMobile] = useState('');
+  const [username, setUsername] = useState(''); // Updated state handler
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,15 +18,16 @@ export function SignUp() {
         body: JSON.stringify({ username, email, password }),
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
       const data = await response.json();
-      const { token } = data;
 
-      Alert.alert('Registration Successful', `Token: ${token}`);
-      // You can now save the token, navigate to another screen, etc.
+      if (response.ok) {
+        Alert.alert('Registration Successful', 'Please log in.');
+        // Navigate to SignIn screen after successful registration
+        navigation.navigate('SignIn');
+      } else {
+        // If registration fails, show the specific message returned by the server
+        Alert.alert('Registration Failed', `Error: ${data.message}`);
+      }
     } catch (error) {
       console.error('Error registering user:', error);
       Alert.alert('Registration Failed', 'Please try again.');
@@ -48,40 +49,64 @@ export function SignUp() {
             <Image style={{}} source={require('../assets/verifieduser.png')} />
           </View>
           <View style={{ width: '100%', marginTop: 20 }}>
-            <Text style={styles.label}>Mobile No</Text>
-            <TextInput style={styles.input} placeholder="Enter your mobile number" placeholderTextColor="white" keyboardType="phone-pad" onChangeText={setMobile} />
+            <Text style={styles.label}>Username</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your username"
+              placeholderTextColor="white"
+              keyboardType="default"
+              onChangeText={setUsername}
+            />
             <Text style={styles.label}>Email Id</Text>
-            <TextInput style={styles.input} placeholder="Enter your email" placeholderTextColor="white" keyboardType="email-address" onChangeText={setEmail} />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your email"
+              placeholderTextColor="white"
+              keyboardType="email-address"
+              onChangeText={setEmail}
+            />
             <Text style={styles.label}>Password</Text>
-            <TextInput style={styles.input} placeholder="Enter your password" placeholderTextColor="white" secureTextEntry={true} onChangeText={setPassword} />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your password"
+              placeholderTextColor="white"
+              secureTextEntry={true}
+              onChangeText={setPassword}
+            />
           </View>
 
           <TouchableOpacity onPress={handleRegister}>
-            <ImageBackground source={require('../assets/Rectangle33.png')} style={{
-              width: 240, height: 100,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }} resizeMode="contain">
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: '600' }}>Sign Up</Text>
+            <ImageBackground
+              source={require('../assets/Rectangle33.png')}
+              style={styles.button}
+              resizeMode="contain">
+              <Text style={styles.buttonText}>Sign Up</Text>
             </ImageBackground>
           </TouchableOpacity>
 
           <View style={styles.loginContainer}>
             <Text style={{ color: 'white', fontSize: 10, alignSelf: 'flex-end' }}>Already have an account? </Text>
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
-              <Text style={styles.loginText}> </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('SignIn')}>
+              <Text style={styles.loginText}>Login </Text>
             </TouchableOpacity>
           </View>
+
           <Text style={{ color: 'white' }}>_____ Or Continue with ______</Text>
           <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
             <TouchableOpacity onPress={() => navigation.navigate('WalletConnect')}>
-              <ImageBackground source={require('../assets/iconbg.png')} style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }} resizeMode="contain">
-                <Image source={require('../assets/Google.png')} style={{ width: 40, height: 60 }} resizeMode="contain" />
+              <ImageBackground
+                source={require('../assets/iconbg.png')}
+                style={styles.iconBackground}
+                resizeMode="contain">
+                <Image source={require('../assets/Google.png')} style={styles.iconImage} resizeMode="contain" />
               </ImageBackground>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('WalletConnect')}>
-              <ImageBackground source={require('../assets/iconbg.png')} style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center' }} resizeMode="contain">
-                <Image source={require('../assets/Phantom.png')} style={{ width: 40, height: 60 }} resizeMode="contain" />
+              <ImageBackground
+                source={require('../assets/iconbg.png')}
+                style={styles.iconBackground}
+                resizeMode="contain">
+                <Image source={require('../assets/Phantom.png')} style={styles.iconImage} resizeMode="contain" />
               </ImageBackground>
             </TouchableOpacity>
           </View>
@@ -111,7 +136,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   loginText: {
-    color: 'blue', // Color for the Login text
+    color: 'blue',
     textDecorationLine: 'none',
   },
   label: {
@@ -140,5 +165,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 3.5,
     elevation: 5,
+  },
+  button: {
+    width: 240,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  iconBackground: {
+    width: 60,
+    height: 60,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  iconImage: {
+    width: 40,
+    height: 60,
   },
 });
