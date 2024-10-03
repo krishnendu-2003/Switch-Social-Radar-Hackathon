@@ -33,7 +33,7 @@ export function CreatePost() {
 
           try {
             // Upload to backend
-            const res = await axios.post('http://localhost:5002/upload', formData, {
+            const res = await axios.post('http://localhost:5001/upload', formData, {
               headers: { 'Content-Type': 'multipart/form-data' },
             });
 
