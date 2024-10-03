@@ -196,6 +196,7 @@
 
             posts.forEach(post => {
                 const postDiv = document.createElement('div');
+                console.log(post);
                 postDiv.className = 'post';
                 postDiv.innerHTML = `
             <p><strong>${post.user.username}</strong></p>
