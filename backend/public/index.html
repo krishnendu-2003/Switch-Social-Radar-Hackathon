@@ -196,9 +196,10 @@
 
             posts.forEach(post => {
                 const postDiv = document.createElement('div');
+                console.log(post);
                 postDiv.className = 'post';
                 postDiv.innerHTML = `
-            <p><strong>${post.user.username}</strong></p>
+            <p><strong>${post.username}</strong></p>
             <p>${post.content}</p>
             ${post.media ? `<img src="${post.media}" alt="Post media" style="max-width: 100%;">` : ''}
             <button onclick="likePost('${post._id}')">Like (${post.likes.length})</button>
