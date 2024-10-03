@@ -8,11 +8,18 @@ const { upload } = require('../middlewares/upload');
 router.post('/', auth, upload.single('media'), async (req, res) => {
     try {
         const { content } = req.body;
+
+        // Fetch user details to get the username
+        const user = await User.findById(req.user.id);
+
+        // Create a new post with the user's username
         const newPost = new Post({
             user: req.user.id,
+            username: user.username,  // Attach the username to the post
             content,
             media: req.file ? req.file.location : null,
         });
+
         const post = await newPost.save();
         res.json(post);
     } catch (err) {
@@ -20,6 +27,7 @@ router.post('/', auth, upload.single('media'), async (req, res) => {
         res.status(500).send('Server error');
     }
 });
+
 
 router.get('/feed', auth, async (req, res) => {
     try {
