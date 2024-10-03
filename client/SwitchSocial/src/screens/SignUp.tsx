@@ -51,7 +51,7 @@ export function SignUp() {
 
       <View style={styles.loginContainer}>
           <Text style={{color: 'white', fontSize: 10, alignSelf: 'flex-end'}}>Already have an account? </Text>
-          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
             <Text style={styles.loginText}>Login</Text>
           </TouchableOpacity>
         </View>
