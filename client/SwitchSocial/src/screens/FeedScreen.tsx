@@ -1,30 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import * as ImagePicker from 'react-native-image-picker';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationBar } from '../screens/NavigationBar';
 
 export function FeedScreen() {
   const navigation = useNavigation();
   const [image, setImage] = useState<string | null>(null);  // State for selected image
-
-  const pickImage = async () => {
-    const options = {
-      mediaType: 'photo',
-      quality: 1,
-    };
-
-    ImagePicker.launchImageLibrary(options, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.error('ImagePicker Error: ', response.error);
-      } else {
-        setImage(response.assets[0].uri);
-      }
-    });
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -48,17 +30,6 @@ export function FeedScreen() {
 
         {/* Stories */}
         <Text style={styles.sectionTitle}>Your Featured Stories</Text>
-        <ScrollView horizontal style={styles.storiesContainer}>
-          <TouchableOpacity style={styles.addStoryButton} onPress={pickImage}>
-            <Ionicons name="add" size={24} color="white" />
-          </TouchableOpacity>
-          {image && (
-            <Image source={{ uri: image }} style={styles.storyImage} />
-          )}
-        </ScrollView>
-
-        {/* Button to pick an image */}
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
 
         {/* Display the selected image */}
         {image && (
@@ -68,12 +39,12 @@ export function FeedScreen() {
         {/* Post */}
         <View style={styles.postContainer}>
           <Image
-            source={{ uri: 'https://example.com/beach-image.jpg' }}
+            source={require('../assets/bk.jpeg')}
             style={styles.postImage}
           />
           <View style={styles.postFooter}>
             <Image
-              source={{ uri: 'https://example.com/james-avatar.jpg' }}
+              source={require('../assets/gift.png')}
               style={styles.avatar}
             />
             <Text style={styles.username}>James</Text>
@@ -105,21 +76,24 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
   },
   header: {
+    
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 15,
-    backgroundColor: '#1a1a1a',
   },
   headerTitle: {
+
     color: 'white',
     fontSize: 18,
     fontWeight: 'bold',
   },
   greeting: {
+    
     flexDirection: 'row',
     alignItems: 'center',
     padding: 15,
+    gap: 100
   },
   greetingText: {
     color: 'white',
@@ -131,25 +105,11 @@ const styles = StyleSheet.create({
     height: 150,
   },
   sectionTitle: {
+    
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 10,
-  },
-  storiesContainer: {
-    paddingVertical: 10,
-  },
-  addStoryButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.7)',
-    borderRadius: 10,
-    padding: 10,
-    marginRight: 10,
-  },
-  storyImage: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    marginRight: 10,
   },
   image: {
     width: 200,
@@ -157,17 +117,28 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   postContainer: {
+    borderRadius: 60,
+
     marginVertical: 10,
+    padding: 15,
+
   },
   postImage: {
+    
     width: '100%',
     height: 200,
-    borderRadius: 10,
+    borderTopLeftRadius: 30,  
+    borderTopRightRadius: 30, 
   },
   postFooter: {
+    
     flexDirection: 'row',
     alignItems: 'center',
     padding: 10,
+    backgroundColor: '#252526',
+    borderBottomLeftRadius: 40,  
+    borderBottomRightRadius: 40, 
+
   },
   avatar: {
     width: 40,
@@ -186,5 +157,7 @@ const styles = StyleSheet.create({
   postActions: {
     flexDirection: 'row',
     marginLeft: 'auto',
+    gap:15,
+
   },
 });
