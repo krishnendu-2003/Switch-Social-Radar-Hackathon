@@ -10,7 +10,7 @@ export function SignUp() {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://192.168.10.159:5001/api/auth/register', {
+      const response = await fetch('http://192.168.0.225:5001/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

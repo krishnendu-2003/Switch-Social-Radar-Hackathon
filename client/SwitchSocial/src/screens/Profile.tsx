@@ -1,7 +1,9 @@
-import { View, Text, StyleSheet, ImageBackground, Image, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, Image, ScrollView, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { NavigationBar } from '../screens/NavigationBar';
 import { ConnectButton } from '../components/sign-in/sign-in-ui';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 
 export function Profile() {
   return (
@@ -14,7 +16,19 @@ export function Profile() {
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
           <Image source={require('../assets/bell.fill.png')}  style={{ alignSelf: 'flex-end', margin: 20}}/>
           <Text style={styles.profileTitle}>My Profile</Text>
+          <TouchableOpacity >
           <Image source={require('../assets/ProfilePhoto.jpeg')} style={styles.profilePhoto} />
+          <TouchableOpacity 
+          style={{backgroundColor: 'colors.secondary',
+            borderRadius:24, padding:8, 
+            position: 'absolute',
+             borderWidth:2
+            }}
+          >
+        <MaterialCommunityIcons name="camera-outline" size={24} color="black" />   
+        </TouchableOpacity>
+       
+          </TouchableOpacity>
           <Text style={styles.username}>Echo_Whisper._</Text>
 
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -42,7 +56,7 @@ export function Profile() {
             <View  style={styles.connectText }>
               <View><Image source={require('../assets/Ethicon.png')}/></View>
               <View><Text style={{color:'white'}}>4,668 ETH</Text></View>
-              <View><Text style={{color:'white'}}>Add  > </Text></View>
+              <View><Text style={{color:'white'}}>Add </Text></View>
             </View>
           </View>
 
@@ -75,7 +89,7 @@ const styles = StyleSheet.create({
     height: 150, 
     borderRadius: 75, 
     borderWidth: 2,
-    margin: 20
+    margin: 20,
   },
   username: {
     color: 'white',
