@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { BASE_URI } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function SignIn() {
   const navigation = useNavigation();
@@ -9,7 +11,7 @@ export function SignIn() {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://192.168.0.225:5001/api/auth/login', {
+      const response = await fetch(`${BASE_URI}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,6 +25,7 @@ export function SignIn() {
 
       const data = await response.json();
       const { token } = data;
+      await AsyncStorage.setItem('token', token);
 
       // You can save the token using AsyncStorage (or SecureStore for better security)
       Alert.alert('Login Successful', `Token: ${token}`);
@@ -68,4 +71,4 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3, shadowRadius: 3.5, elevation: 5,
   },
   button: { width: 240, height: 100, justifyContent: 'center', alignItems: 'center' },
-});
+})
