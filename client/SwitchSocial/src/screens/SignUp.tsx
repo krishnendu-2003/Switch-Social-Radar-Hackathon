@@ -1,6 +1,9 @@
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native'; // Import navigation hook
+import { BASE_URI } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export function SignUp() {
   const navigation = useNavigation();
@@ -10,7 +13,7 @@ export function SignUp() {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://192.168.0.225:5001/api/auth/register', {
+      const response = await fetch(`${BASE_URI}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

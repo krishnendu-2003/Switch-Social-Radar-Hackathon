@@ -1,15 +1,17 @@
 import { View, Text, StyleSheet, ImageBackground, Image, TouchableOpacity, TextInput, ScrollView, Alert } from 'react-native';
 import React, { useState } from 'react';
-import { useNavigation } from '@react-navigation/native'; 
+import { useNavigation } from '@react-navigation/native';
+import { BASE_URI } from '../constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export function SignIn(){
+export function SignIn() {
   const navigation = useNavigation();
   const [email, getEmail] = useState('');
   const [password, getPassword] = useState('');
 
   const handleRegister = async () => {
     try {
-      const response = await fetch('http://192.168.0.225:5001/api/auth/login', {
+      const response = await fetch(`${BASE_URI}/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,6 +25,7 @@ export function SignIn(){
 
       const data = await response.json();
       const { token } = data;
+      await AsyncStorage.setItem('token', token);
 
       // You can save the token using AsyncStorage (or SecureStore for better security)
       Alert.alert('Login Successful', `Token: ${token}`);
@@ -41,11 +44,11 @@ export function SignIn(){
         style={styles.background}
         resizeMode="cover">
         <ScrollView contentContainerStyle={styles.scrollContainer} keyboardShouldPersistTaps="handled">
-          <Text style={{color: 'white', fontSize: 30}}>SIGN IN HERE!</Text>
+          <Text style={{ color: 'white', fontSize: 30 }}>SIGN IN HERE!</Text>
           <Text style={styles.label}>Email Id</Text>
-          <TextInput style={styles.input} placeholder="Enter your email" placeholderTextColor="white" keyboardType="email-address" onChangeText={getEmail}/>
+          <TextInput style={styles.input} placeholder="Enter your email" placeholderTextColor="white" keyboardType="email-address" onChangeText={getEmail} />
           <Text style={styles.label}>Password</Text>
-          <TextInput style={styles.input} placeholder="Enter your password" placeholderTextColor="white" secureTextEntry={true} onChangeText={getPassword}/>
+          <TextInput style={styles.input} placeholder="Enter your password" placeholderTextColor="white" secureTextEntry={true} onChangeText={getPassword} />
           <TouchableOpacity onPress={handleRegister}>
             <ImageBackground source={require('../assets/Rectangle33.png')} style={styles.button} resizeMode="contain">
               <Text style={{ color: 'white', fontSize: 20, fontWeight: '600' }}>Sign In</Text>
