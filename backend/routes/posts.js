@@ -31,6 +31,7 @@ router.post('/', auth, upload.single('media'), async (req, res) => {
 
 router.get('/feed', auth, async (req, res) => {
     try {
+
         const currentUser = await User.findById(req.user.id);
         const userPosts = await Post.find({ user: req.user.id });
         const friendPosts = await Post.find({ user: { $in: currentUser.following } });
