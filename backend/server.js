@@ -11,6 +11,12 @@ const postRoutes = require('./routes/posts');
 const commentRoutes = require('./routes/comments');
 const likeRoutes = require('./routes/likes');
 const storyRoutes = require('./routes/stories');
+const productRoutes = require('./routes/product');
+const orderRoutes = require('./routes/order');
+const affiliateRoutes = require('./routes/affiliate');
+const payoutRoutes = require('./routes/payout');
+
+
 
 const app = express();
 
@@ -31,6 +37,10 @@ app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/likes', likeRoutes);
 app.use('/api/stories', storyRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
+app.use('/api/affiliate', affiliateRoutes);
+app.use('/api/payouts', payoutRoutes);
 
 const PORT = process.env.PORT || 5001;
 app.listen(PORT, '0.0.0.0', () => {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Platform</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Social Media Platform</h1>
+
+    <div id="auth-section">
+        <h2>Authentication</h2>
+        <form id="register-form">
+            <input type="text" id="reg-username" placeholder="Username" required>
+            <input type="email" id="reg-email" placeholder="Email" required>
+            <input type="password" id="reg-password" placeholder="Password" required>
+            <button type="submit">Register</button>
+        </form>
+        <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required>
+            <input type="password" id="login-password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <div id="user-section" class="hidden">
+        <h2>Welcome, <span id="username"></span>!</h2>
+        <button id="logout-btn">Logout</button>
+
+        <h3>Create a Post</h3>
+        <form id="post-form">
+            <textarea id="post-content" placeholder="What's on your mind?" required></textarea>
+            <input type="file" id="post-media" accept="image/*">
+            <button type="submit">Post</button>
+        </form>
+
+        <h3>Stories</h3>
+        <div id="add-story-form">
+            <textarea id="story-content" placeholder="Share your story..." required></textarea>
+            <input type="file" id="media-file" accept="image/*,video/*" required />
+            <button id="add-story-btn">Add Story</button>
+        </div>
+        <h4>Current Stories</h4>
+        <div id="stories-container"></div>
+
+        <h3>Feed</h3>
+        <div id="feed"></div>
+
+        <h3>Find Users</h3>
+        <input type="text" id="user-search" placeholder="Search users">
+        <button id="search-btn">Search</button>
+        <div id="user-results"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
