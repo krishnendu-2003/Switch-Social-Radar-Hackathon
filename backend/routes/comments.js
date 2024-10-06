@@ -4,14 +4,17 @@ const router = express.Router();
 const Comment = require('../models/Comment');
 const Post = require('../models/Post');
 const auth = require('../middlewares/auth');
+const User = require('../models/User');
 
 router.post('/:postId', auth, async (req, res) => {
     try {
         const post = await Post.findById(req.params.postId);
         if (!post) return res.status(404).json({ message: 'Post not found' });
+        const user = await User.findById(req.user.id);
 
         const newComment = new Comment({
             user: req.user.id,
+            username: user.username,
             post: req.params.postId,
             content: req.body.content,
         });
