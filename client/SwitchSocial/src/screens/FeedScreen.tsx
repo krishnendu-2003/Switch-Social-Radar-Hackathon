@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationBar } from '../screens/NavigationBar';
@@ -16,7 +16,32 @@ interface Post {
   likes: string[];
   comments: any[];
   user: string;
+  fetchedComments: any[];
 }
+
+interface Comment {
+  _id: string;
+  user: {
+    _id: string;
+
+  };
+  username: string;
+  content: string;
+  likes: string[];
+}
+
+interface CommentData {
+  _id: string;
+  user: {
+    _id: string;
+    username: string;
+    profilePicture?: string;
+  };
+  content: string;
+  likes: string[];
+  createdAt: string;
+}
+
 
 interface User {
   _id: string;
@@ -27,6 +52,8 @@ export function FeedScreen() {
   const navigation = useNavigation();
   const [posts, setPosts] = useState<Post[]>([]);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const [visibleComments, setVisibleComments] = useState<{ [key: string]: boolean }>({});
+  const [newComments, setNewComments] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     fetchCurrentUser();
@@ -72,14 +99,104 @@ export function FeedScreen() {
   };
 
   const handleLike = async (postId: string) => {
-    // Implement like functionality
-    Alert.alert('Like', `Liked post ${postId}`);
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await fetch(`${BASE_URI}/likes/post/${postId}`, {
+        method: 'POST',
+        headers: { 'x-auth-token': token || '' }
+      });
+
+      if (response.ok) {
+        // Update the likes count locally
+        setPosts(prevPosts => prevPosts.map(post =>
+          post._id === postId
+            ? { ...post, likes: [...(post.likes || []), currentUser?._id].filter(Boolean) }
+            : post
+        ));
+      } else {
+        const data = await response.json();
+        Alert.alert('Error', `Failed to like post: ${data.message}`);
+      }
+    } catch (error) {
+      console.error('Error liking post:', error);
+      Alert.alert('Error', 'An error occurred while liking the post');
+    }
+  };
+  const handleComment = async (postId: string) => {
+    setVisibleComments(prev => ({ ...prev, [postId]: !prev[postId] }));
+    if (!visibleComments[postId]) {
+      await fetchComments(postId);
+    }
   };
 
-  const handleComment = (postId: string) => {
-    // Navigate to comment screen or show comment modal
-    Alert.alert('Comment', `Comment on post ${postId}`);
+
+  const fetchComments = async (postId: string) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await fetch(`${BASE_URI}/comments/${postId}`, {
+        headers: { 'x-auth-token': token || '' }
+      });
+      if (response.ok) {
+        const comments: CommentData[] = await response.json();
+        setPosts(prevPosts =>
+          prevPosts.map(post =>
+            post._id === postId ? { ...post, fetchedComments: comments } : post
+          )
+        );
+      } else {
+        throw new Error('Failed to fetch comments');
+      }
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+      Alert.alert('Error', 'Failed to load comments');
+    }
   };
+  const addComment = async (postId: string) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const content = newComments[postId];
+      if (!content) return;
+
+      const response = await fetch(`${BASE_URI}/comments/${postId}`, {
+        method: 'POST',
+        headers: {
+          'x-auth-token': token || '',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content })
+      });
+
+      if (response.ok) {
+        setNewComments(prev => ({ ...prev, [postId]: '' }));
+        await fetchComments(postId);
+      } else {
+        throw new Error('Failed to add comment');
+      }
+    } catch (error) {
+      console.error('Error adding comment:', error);
+      Alert.alert('Error', 'Failed to add comment');
+    }
+  };
+
+  const likeComment = async (commentId: string) => {
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const response = await fetch(`${BASE_URI}/likes/comment/${commentId}`, {
+        method: 'POST',
+        headers: { 'x-auth-token': token || '' }
+      });
+
+      if (response.ok) {
+        await fetchFeed(token || '');
+      } else {
+        throw new Error('Failed to like comment');
+      }
+    } catch (error) {
+      console.error('Error liking comment:', error);
+      Alert.alert('Error', 'Failed to like comment');
+    }
+  };
+
 
   const handleDelete = async (postId: string) => {
     try {
@@ -139,11 +256,11 @@ export function FeedScreen() {
             <View style={styles.postFooter}>
               <TouchableOpacity onPress={() => handleLike(post._id)} style={styles.actionButton}>
                 <Ionicons name="heart-outline" size={24} color="white" />
-                <Text style={styles.actionText}>{post.likes.length}</Text>
+                <Text style={styles.actionText}>{post.likes?.length || 0}</Text>
               </TouchableOpacity>
               <TouchableOpacity onPress={() => handleComment(post._id)} style={styles.actionButton}>
                 <Ionicons name="chatbubble-outline" size={24} color="white" />
-                <Text style={styles.actionText}>{post.comments.length}</Text>
+                <Text style={styles.actionText}>{post.comments?.length || 0}</Text>
               </TouchableOpacity>
               {currentUser && currentUser._id === post.user && (
                 <TouchableOpacity onPress={() => handleDelete(post._id)} style={styles.actionButton}>
@@ -151,10 +268,36 @@ export function FeedScreen() {
                 </TouchableOpacity>
               )}
             </View>
+
+            {visibleComments[post._id] && (
+              <View style={styles.commentsSection}>
+                {post.fetchedComments?.map((comment) => (
+                  <View key={comment._id} style={styles.comment}>
+                    <Text style={styles.commentUsername}>{comment.user.username}</Text>
+                    <Text style={styles.commentContent}>{comment.content}</Text>
+                    <TouchableOpacity onPress={() => likeComment(comment._id)} style={styles.likeCommentButton}>
+                      <Ionicons name="heart-outline" size={16} color="white" />
+                      <Text style={styles.likeCommentText}>{comment.likes?.length || 0}</Text>
+                    </TouchableOpacity>
+                  </View>
+                ))}
+                <View style={styles.addCommentSection}>
+                  <TextInput
+                    style={styles.commentInput}
+                    value={newComments[post._id] || ''}
+                    onChangeText={(text) => setNewComments(prev => ({ ...prev, [post._id]: text }))}
+                    placeholder="Add a comment..."
+                    placeholderTextColor="#999"
+                  />
+                  <TouchableOpacity onPress={() => addComment(post._id)} style={styles.addCommentButton}>
+                    <Ionicons name="send" size={24} color="white" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            )}
           </View>
         ))}
       </ScrollView>
-
       <NavigationBar />
     </SafeAreaView>
   );
@@ -245,5 +388,44 @@ const styles = StyleSheet.create({
   actionText: {
     color: 'white',
     marginLeft: 5,
+  },
+  commentsSection: {
+    marginTop: 10,
+  },
+  comment: {
+    marginBottom: 5,
+  },
+  commentUsername: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  commentContent: {
+    color: 'white',
+  },
+  likeCommentButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  likeCommentText: {
+    color: 'white',
+    marginLeft: 5,
+    fontSize: 12,
+  },
+  addCommentSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  commentInput: {
+    flex: 1,
+    backgroundColor: '#333',
+    color: 'white',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    marginRight: 10,
+  },
+  addCommentButton: {
+    padding: 5,
   },
 });
