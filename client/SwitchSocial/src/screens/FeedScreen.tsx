@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationBar } from '../screens/NavigationBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URI } from '../constants';
-
+import LogoutButton from '../components/LogoutButton';
 interface Post {
   _id: string;
   username: string;
@@ -109,8 +109,8 @@ export function FeedScreen() {
       if (response.ok) {
         // Update the likes count locally
         setPosts(prevPosts => prevPosts.map(post =>
-          post._id === postId
-            ? { ...post, likes: [...(post.likes || []), currentUser?._id].filter(Boolean) }
+          post._id === postId 
+          ? { ...post, likes: [...(post.likes || []), currentUser?._id].filter(Boolean) }
             : post
         ));
       } else {
@@ -227,6 +227,7 @@ export function FeedScreen() {
         <TouchableOpacity>
           <Ionicons name="notifications" size={24} color="white" />
         </TouchableOpacity>
+        <LogoutButton/>
       </View>
 
       <ScrollView>

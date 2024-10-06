@@ -11,6 +11,7 @@ export function SignIn() {
 
   const handleRegister = async () => {
     try {
+      console.log(`${BASE_URI} login`)
       const response = await fetch(`${BASE_URI}/auth/login`, {
         method: 'POST',
         headers: {
@@ -26,14 +27,16 @@ export function SignIn() {
       const data = await response.json();
       const { token } = data;
       await AsyncStorage.setItem('token', token);
+      await AsyncStorage.setItem('email',email);
+      await AsyncStorage.setItem('password',password)
 
       // You can save the token using AsyncStorage (or SecureStore for better security)
-      Alert.alert('Login Successful', `Token: ${token}`);
+      // Alert.alert('Login Successful', `Token: ${token}`);
       // Navigate to the FeedScreen after login
       navigation.navigate('FeedScreen');
     } catch (error) {
       console.error('Error login user:', error);
-      Alert.alert('Login Failed', 'Please try again.');
+      //Alert.alert('Login Failed', 'Please try again.');
     }
   };
 

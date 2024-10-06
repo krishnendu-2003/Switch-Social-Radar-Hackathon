@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, ImageBackground, Image,TouchableOpacity,  TextInput, ScrollView,  KeyboardAvoidingView  } from 'react-native';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native'; 
+import { ConnectButton, SignInButton } from "../components/sign-in/sign-in-ui";
+
 // import '../screens/Profile';
 // import { Profile } from '../screens/Profile';
 
@@ -15,11 +17,15 @@ export function WalletConnect() {
             <ImageBackground source={require('../assets/wclogo.png')} style={{ width:100,height: 100,alignItems: 'center', justifyContent: 'center', marginTop: 200}}>
                 <Image source={require('../assets/wcGroup.png')}/>
             </ImageBackground>
-            <Text style={{color: 'white', fontSize:30, marginTop:30}}> Enter Your Password</Text>
-            <TextInput style={styles.input} placeholder="Password" placeholderTextColor="white" secureTextEntry={true} />
-            <TouchableOpacity onPress={() => navigation.navigate('FeedScreen')}>
-            <Text style={styles.label}>Unlock</Text>
-            </TouchableOpacity>
+            {/* <Text style={{color: 'white', fontSize:30, marginTop:30}}> Enter Your Password</Text> */}
+            {/* <TextInput style={styles.input} placeholder="Password" placeholderTextColor="white" secureTextEntry={true} /> */}
+            {/* <TouchableOpacity onPress={() => navigation.navigate('FeedScreen')}> */}
+            {/* <Text style={styles.label}>Unlock</Text> */}
+            <View style={styles.buttonGroup}>
+        <ConnectButton />
+        <SignInButton />
+      </View>
+            {/* </TouchableOpacity> */}
             </ScrollView> 
     
         </ImageBackground>
@@ -62,5 +68,9 @@ const styles = StyleSheet.create({
         lineHeight: 40,
         borderRadius: 5, 
         marginTop: 60
-      }
-})
+      },
+      buttonGroup: {
+        marginTop: 16,
+        flexDirection: "row",
+      },
+})x

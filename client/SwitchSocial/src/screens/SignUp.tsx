@@ -10,8 +10,10 @@ export function SignUp() {
   const [username, setUsername] = useState(''); // Updated state handler
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleRegister = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`${BASE_URI}/auth/register`, {
         method: 'POST',
