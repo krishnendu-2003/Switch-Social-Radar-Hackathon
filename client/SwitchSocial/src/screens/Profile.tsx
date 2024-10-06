@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationBar } from '../screens/NavigationBar';
 import { ConnectButton } from '../components/sign-in/sign-in-ui';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import LogoutButton from '../components/LogoutButton';
 
 
 export function Profile() {
@@ -88,7 +89,7 @@ export function Profile() {
                 
             </View>
                  
-                          
+      
           
 {/* 
           <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -120,7 +121,13 @@ export function Profile() {
             </View>
           </View> */}
 
+          <View style={styles.logoutButton}>
+          <LogoutButton/>
+
+          </View>
+
         </ScrollView>
+        
         <NavigationBar />
       </ImageBackground>
     </View>
@@ -199,5 +206,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: 'white',
     marginTop: 4,  // Space between the name and price
+  },
+  logoutButton: {
+    alignSelf: 'flex-end', // This will move the button to the right
+    marginRight: 20, 
+    marginTop: 80,
+
   }
 });

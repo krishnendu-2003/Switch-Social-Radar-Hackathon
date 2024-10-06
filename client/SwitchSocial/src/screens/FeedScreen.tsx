@@ -227,7 +227,6 @@ export function FeedScreen() {
         <TouchableOpacity>
           <Ionicons name="notifications" size={24} color="white" />
         </TouchableOpacity>
-        <LogoutButton/>
       </View>
 
       <ScrollView>
@@ -262,6 +261,9 @@ export function FeedScreen() {
               <TouchableOpacity onPress={() => handleComment(post._id)} style={styles.actionButton}>
                 <Ionicons name="chatbubble-outline" size={24} color="white" />
                 <Text style={styles.actionText}>{post.comments?.length || 0}</Text>
+              </TouchableOpacity>
+              <TouchableOpacity>
+              <Ionicons name="share-outline" size={24} color="white"  style={{ marginLeft:200}}/>
               </TouchableOpacity>
               {currentUser && currentUser._id === post.user && (
                 <TouchableOpacity onPress={() => handleDelete(post._id)} style={styles.actionButton}>
@@ -380,7 +382,7 @@ const styles = StyleSheet.create({
   },
   postFooter: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
   },
   actionButton: {
     flexDirection: 'row',
@@ -389,12 +391,15 @@ const styles = StyleSheet.create({
   actionText: {
     color: 'white',
     marginLeft: 5,
+    marginRight:10
   },
   commentsSection: {
     marginTop: 10,
+
   },
   comment: {
     marginBottom: 5,
+    
   },
   commentUsername: {
     color: 'white',

@@ -15,7 +15,7 @@ export default function LogoutButton (){
            await AsyncStorage.setItem("password","");
             navigation.navigate("MainPage")
         }}>
-            <Text>Logout</Text>
+            <Text style={{ color:'white', }}>Logout</Text>
         </TouchableOpacity>
         
     </View>
@@ -25,11 +25,13 @@ export default function LogoutButton (){
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:"#fff",
+       backgroundColor: 'rgba(128, 128, 128, 0.5)',
         width:100,
         height:50,
         justifyContent:"center",
-        alignItems:"center"
+        alignItems:"center",
+        borderRadius:21,
+       
         
     }
 })
