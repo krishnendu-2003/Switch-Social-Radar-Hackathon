@@ -5,7 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { NavigationBar } from '../screens/NavigationBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URI } from '../constants';
-import LogoutButton from '../components/LogoutButton';
+import { Share, Linking } from 'react-native';
+
 interface Post {
   _id: string;
   username: string;
@@ -217,6 +218,29 @@ export function FeedScreen() {
     }
   };
 
+  const handleShare = async (postId: string) => {
+    try {
+      const shareableLink = `${BASE_URI}/posts/${postId}`; // Construct the shareable URL for the post
+      const result = await Share.share({
+        message: `Check out this post on Switch Social: ${shareableLink}`,
+      });
+  
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          console.log(`Shared with activity type: ${result.activityType}`);
+        } else {
+          console.log('Post shared successfully!');
+        }
+      } else if (result.action === Share.dismissedAction) {
+        console.log('Post sharing dismissed');
+      }
+    } catch (error) {
+      console.error('Error sharing post:', error);
+      Alert.alert('Error', 'Failed to share the post');
+    }
+  };
+  
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -262,14 +286,14 @@ export function FeedScreen() {
                 <Ionicons name="chatbubble-outline" size={24} color="white" />
                 <Text style={styles.actionText}>{post.comments?.length || 0}</Text>
               </TouchableOpacity>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => handleShare(post._id)}>
               <Ionicons name="share-outline" size={24} color="white"  style={{ marginLeft:200}}/>
               </TouchableOpacity>
-              {currentUser && currentUser._id === post.user && (
+              {/* {currentUser && currentUser._id === post.user && (
                 <TouchableOpacity onPress={() => handleDelete(post._id)} style={styles.actionButton}>
                   <Ionicons name="trash-outline" size={24} color="white" />
                 </TouchableOpacity>
-              )}
+              )} */}
             </View>
 
             {visibleComments[post._id] && (
