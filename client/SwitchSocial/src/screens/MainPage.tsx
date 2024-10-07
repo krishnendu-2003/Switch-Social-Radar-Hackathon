@@ -15,8 +15,8 @@ export function MainPage() {
         source={require('../assets/char.png')}
         style={{ width: 350, height: 350, marginTop: 100 }}
       />
-      <Text style={{ color: 'white', fontSize: 20, fontWeight: "800" }}>Express your{'\n'} creativity</Text>
-      <Text style={{ color: 'white', fontSize: 20 }}>Switch to SwitchSocial!!</Text>
+      <Text style={{ color: 'white', fontSize: 40, fontWeight: "800" }}>Express your{'\n'} creativity</Text>
+      <Text style={{ color: 'white', fontSize: 20, marginTop:20 }}>Switch to SwitchSocial!!</Text>
 
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}
         onPressIn={() => setPressed(true)}

@@ -6,6 +6,7 @@ import { NavigationBar } from '../screens/NavigationBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URI } from '../constants';
 import { Share, Linking } from 'react-native';
+import LogoutButton from '../components/LogoutButton';
 
 interface Post {
   _id: string;
@@ -284,6 +285,11 @@ export function FeedScreen() {
           <Text style={styles.menuItem}>Wallet</Text>
           <Text style={styles.menuItem}>Settings</Text>
           <Text style={styles.menuItem}>Help</Text>
+          <View style={{marginTop:330, justifyContent:'center', alignItems:'center'}}>
+          <LogoutButton/>
+
+          </View>
+
           {/* <Text style={styles.menuItem}>Logout</Text> */}
         </Animated.View>
       </Modal>
@@ -354,12 +360,15 @@ export function FeedScreen() {
                   <TouchableOpacity onPress={() => addComment(post._id)} style={styles.addCommentButton}>
                     <Ionicons name="send" size={24} color="white" />
                   </TouchableOpacity>
+
                 </View>
+              
               </View>
             )}
           </View>
         ))}
       </ScrollView>
+
       <NavigationBar />
     </SafeAreaView>
   );
