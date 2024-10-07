@@ -15,10 +15,8 @@ export function MainPage() {
         source={require('../assets/char.png')}
         style={{ width: 350, height: 350, marginTop: 100 }}
       />
-      <Text style={{ color: 'white', fontSize: 50, fontWeight: "900" }}>Express your{'\n'} creativity</Text>
-      <Text style={{ color: 'white', fontSize: 20 }}>Lorem ipsum dolor sit amet consectetur {'\n'}elit.{'\n'}
-        Nulla enim laborum, nam quasi error{'\n'}eius
-        nihil! Iusto tenetur, nihil dicta sequi</Text>
+      <Text style={{ color: 'white', fontSize: 20, fontWeight: "800" }}>Express your{'\n'} creativity</Text>
+      <Text style={{ color: 'white', fontSize: 20 }}>Switch to SwitchSocial!!</Text>
 
       <TouchableOpacity onPress={() => navigation.navigate('SignUp')}
         onPressIn={() => setPressed(true)}

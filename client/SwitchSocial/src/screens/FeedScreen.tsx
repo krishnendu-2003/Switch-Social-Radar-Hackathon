@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, TextInput, Image, StyleSheet, SafeAreaView, ScrollView, TouchableOpacity, Alert,Animated, Modal,Easing } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationBar } from '../screens/NavigationBar';
@@ -55,6 +55,8 @@ export function FeedScreen() {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [visibleComments, setVisibleComments] = useState<{ [key: string]: boolean }>({});
   const [newComments, setNewComments] = useState<{ [key: string]: string }>({});
+  const [isMenuVisible, setMenuVisible] = useState(false);
+  const [slideAnim] = useState(new Animated.Value(-250)); 
 
   useEffect(() => {
     fetchCurrentUser();
@@ -239,12 +241,30 @@ export function FeedScreen() {
       Alert.alert('Error', 'Failed to share the post');
     }
   };
+  const toggleMenu = () => {
+    setMenuVisible(!isMenuVisible);
+    if (!isMenuVisible) {
+      Animated.timing(slideAnim, {
+        toValue: 0,
+        duration: 400,
+        easing: Easing.out(Easing.ease), 
+        useNativeDriver: true,
+      }).start();
+    } else {
+      Animated.timing(slideAnim, {
+        toValue: -250,
+        duration:400,
+        easing: Easing.in(Easing.ease), 
+        useNativeDriver: true,
+      }).start(() => setMenuVisible(false));
+    }
+  };
   
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={toggleMenu}>
           <Ionicons name="menu" size={24} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>SWITCH SOCIAL</Text>
@@ -252,6 +272,21 @@ export function FeedScreen() {
           <Ionicons name="notifications" size={24} color="white" />
         </TouchableOpacity>
       </View>
+      <Modal
+        transparent={true}
+        visible={isMenuVisible}
+        animationType="none"
+        onRequestClose={toggleMenu}
+      >
+        <TouchableOpacity style={styles.modalOverlay} onPress={toggleMenu} />
+        <Animated.View style={[styles.menuContainer, { transform: [{ translateX: slideAnim }] }]}>
+          <Text style={styles.menuItem}>Profile</Text>
+          <Text style={styles.menuItem}>Wallet</Text>
+          <Text style={styles.menuItem}>Settings</Text>
+          <Text style={styles.menuItem}>Help</Text>
+          {/* <Text style={styles.menuItem}>Logout</Text> */}
+        </Animated.View>
+      </Modal>
 
       <ScrollView>
         <View style={styles.greeting}>
@@ -457,5 +492,24 @@ const styles = StyleSheet.create({
   },
   addCommentButton: {
     padding: 5,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  menuContainer: {
+    width: 250,
+    height: '100%',
+    backgroundColor: '#333',
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    position: 'absolute',
+    left: 0,
+    top: 0,
+  },
+  menuItem: {
+    paddingVertical: 20,
+    fontSize: 18,
+    color: 'white',
   },
 });
