@@ -23,7 +23,7 @@ function showAuthSection() {
 
 // Fetch the current user
 async function fetchCurrentUser() {
-    const response = await authFetch(`${API_URL}/auth/current`);
+    const response = await authFetch(`${API_URL}/auth/user`);
     if (response.ok) {
         currentUser = await response.json();
         document.getElementById('username').innerText = currentUser.username;
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // Fetch stories on initial load
-    fetchStories();
+    // fetchStories();
 });
 
 // Initialize the app
